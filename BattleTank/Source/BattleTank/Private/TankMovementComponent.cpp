@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Andrew Moran
 
 #include "BattleTank.h"
 #include "TankTrack.h"
@@ -10,17 +10,6 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }
-
-void UTankMovementComponent::IntendMoveForward(float Throw)
-{
-	if (!LeftTrack || !RightTrack) {
-		return;
-	}
-	LeftTrack->SetThrottle(Throw);
-	RightTrack->SetThrottle(Throw);
-	//TODO prevent double-speed due to dual control use
-}
-
 
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {
@@ -35,6 +24,14 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	IntendTurnRight(RightThrow);
 }
 
+void UTankMovementComponent::IntendMoveForward(float Throw)
+{
+	if (!LeftTrack || !RightTrack) {
+		return;
+	}
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(Throw);
+}
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
@@ -43,7 +40,6 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	}
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
-	//TODO prevent double-speed due to dual control use
 }
 
 

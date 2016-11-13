@@ -31,6 +31,7 @@ private:
 
 	virtual void BeginPlay() override;
 
+	//TODO remove after refactoring
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
 

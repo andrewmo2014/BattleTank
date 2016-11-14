@@ -19,7 +19,7 @@ class UTankBarrel;
 class UTankTurret;
 class AProjectile;
 
-UCLASS( meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup = (Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -47,7 +47,7 @@ private:
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
-	void MoveBarrelTowards(FVector AimDirection);
+	void MoveBarrelTowards(FVector AimDir);
 	bool IsBarrelMoving();
 
 	UTankBarrel* Barrel = nullptr;
@@ -60,7 +60,7 @@ private:
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float ReloadTimeInSeconds = 3.0f;
+	float ReloadTimeInSeconds = 3;
 
 	double LastFireTime = 0;
 	

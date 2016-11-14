@@ -14,7 +14,6 @@ UTankAimingComponent::UTankAimingComponent()
 	// off to improve performance if you don't need them.
 	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
-
 	// ...
 }
 
@@ -40,9 +39,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 
 bool UTankAimingComponent::IsBarrelMoving()
 {
-	if (!ensure(Barrel)) { return false; }
+	if (!ensure(Barrel)) { 
+		return false; 
+	}
 	auto BarrelForward = Barrel->GetForwardVector();
-	return !BarrelForward.Equals(AimDirection, 0.01f);
+	return !BarrelForward.Equals(AimDirection, 0.01);
 }
 
 void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
@@ -53,7 +54,9 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* Tur
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if (!ensure(Barrel)) { return; }
+	if (!ensure(Barrel)) { 
+		return;
+	}
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -78,17 +81,17 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDir)
 {
 	if (!ensure(Barrel) || !ensure(Turret)) {
 		return;
 	}
 
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
-	auto AimAsRotator = AimDirection.Rotation();
+	auto AimAsRotator = AimDir.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
-	Barrel->Elevate( DeltaRotator.Pitch );
+	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
 }
 
@@ -96,8 +99,12 @@ void UTankAimingComponent::Fire()
 {
 	if (FiringState != EFiringState::Reloading)
 	{
-		if (!ensure(Barrel)) { return; }
-		if (!ensure(ProjectileBlueprint)) { return; }
+		if (!ensure(Barrel)) { 
+			return; 
+		}
+		if (!ensure(ProjectileBlueprint)) { 
+			return;
+		}
 
 		//Spawn a projectile at the socket location on the barrel
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(

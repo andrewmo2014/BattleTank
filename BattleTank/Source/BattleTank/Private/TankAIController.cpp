@@ -8,6 +8,7 @@
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+	PrimaryActorTick.bCanEverTick = true;
 }
 
 void ATankAIController::Tick(float DeltaTime)
